@@ -17,21 +17,20 @@ def main():
         max_fitness = 0
         best_string = ''
 
-        for i in range(len(seen_strings)):
-            seen_strings[i], mutations = cf.mutate(seen_strings[i])
+        for i in range(len(population)):
+            mutated, mutations = cf.mutate(population[i])
+            total_mutations += mutations
 
-            if seen_strings[i] in seen_strings:
-                word_fitness = seen_strings[seen_strings[i]]
+            if mutated in seen_strings:
+                word_fitness = seen_strings[population[i]]
             else:
-                word_fitness = cf.fitness(seen_strings[i])
-                print('not good')
-
+                word_fitness = cf.fitness(population[i])
+m
             if word_fitness > max_fitness:
                 max_fitness = word_fitness
-                best_string = ''.join(seen_strings[i])
+                best_string = ''.join(mutated)
 
-            total_mutations += mutations
-            if seen_strings[i] == list(cf.TARGET):
+            if mutated == list(cf.TARGET):
                 solution_found = True
                 solution = ''.join(seen_strings[i])
                 break
