@@ -8,6 +8,9 @@ MUTATION_RATE = 1/len(TARGET)
 speed = 0
 CHAR_POSSIBILITIES = 'abcdefghijklmnopqrstuvwxyz '
 
+# This holds all strings that we have come across, allows for lookup even when they are not in the current string
+# selection in the case in which they have been seen before
+string_fitness = {}
 
 def fitness(word):
     """
@@ -32,10 +35,6 @@ def initialise(population_size=POPULATION_SIZE):
     :param: (int) The size of the population needed
     :return: ({str: int}) N strings with their corresponding fitness
     """
-    # This holds all strings that we have come across, allows for lookup even when they are not in the current string
-    # selection in the case in which they have been seen before
-    string_fitness = {}
-
     # Holds a list of the current strings with POPULATION_SIZE elements
     current_strings = []
 
@@ -68,8 +67,13 @@ def mutate(string):
 
             temp = string.copy()
             temp[i] = random.choice(CHAR_POSSIBILITIES)
+            temp_str = ''.join(temp)
 
-            if fitness(temp) > fitness(string):
+            # Adding to string_fitness if never seen before
+            if temp_str not in string_fitness:
+                string_fitness[temp_str] = fitness(temp)
+
+            if string_fitness[temp_str] > string_fitness[''.join(string)]:
                 string = temp
 
     return ''.join(string), number_of_mutations
