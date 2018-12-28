@@ -33,7 +33,7 @@ def main():
 
             if population[i] == cf.TARGET:
                 solution_found = True
-                solution = ''.join(populationm[i])
+                solution = ''.join(population[i])
                 break
 
         if not solution_found:
