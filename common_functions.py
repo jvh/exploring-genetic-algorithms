@@ -37,7 +37,7 @@ def initialise(population_size=POPULATION_SIZE):
     string_fitness = {}
 
     # Holds a list of the current strings with POPULATION_SIZE elements
-    current_strings = {}
+    current_strings = []
 
     for i in range(population_size):
         new_str = ''
@@ -45,7 +45,7 @@ def initialise(population_size=POPULATION_SIZE):
             ran_char = random.choice(CHAR_POSSIBILITIES)
             new_str += ran_char
         string_fitness[new_str] = fitness(new_str)
-        current_strings[new_str] = fitness(new_str)
+        current_strings.append(new_str)
 
     return string_fitness, current_strings
 
@@ -72,4 +72,4 @@ def mutate(string):
             if fitness(temp) > fitness(string):
                 string = temp
 
-    return string, number_of_mutations
+    return ''.join(string), number_of_mutations

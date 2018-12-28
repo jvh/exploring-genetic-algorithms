@@ -19,20 +19,21 @@ def main():
 
         for i in range(len(population)):
             mutated, mutations = cf.mutate(population[i])
+            population[i] = mutated
             total_mutations += mutations
 
-            if mutated in seen_strings:
+            if population[i] in seen_strings:
                 word_fitness = seen_strings[population[i]]
             else:
                 word_fitness = cf.fitness(population[i])
-m
+
             if word_fitness > max_fitness:
                 max_fitness = word_fitness
-                best_string = ''.join(mutated)
+                best_string = ''.join(population[i])
 
-            if mutated == list(cf.TARGET):
+            if population[i] == cf.TARGET:
                 solution_found = True
-                solution = ''.join(seen_strings[i])
+                solution = ''.join(populationm[i])
                 break
 
         if not solution_found:
