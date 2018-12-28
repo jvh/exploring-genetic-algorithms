@@ -19,16 +19,7 @@ def main():
         best_string = ''
 
         # Selecting 2 random members, picking best one to be parent (out of the random choice) #
-
-        index_1 = index_2 = -1
-        while index_1 == index_2:
-            index_1 = random.randint(0, len(cf.TARGET) - 1)
-            index_2 = random.randint(0, len(cf.TARGET) - 1)
-
-        ran_word_1 = population[index_1]
-        ran_word_2 = population[index_2]
-        fitness_1 = seen_strings[''.join(ran_word_1)]
-        fitness_2 = seen_strings[''.join(ran_word_2)]
+        ran_word_1, fitness_1, _, ran_word_2, fitness_2, _ = cf.random_2_members(population)
 
         if fitness_1 > fitness_2:
             parent = ran_word_1
@@ -39,7 +30,6 @@ def main():
         child_str = ''.join(child)
 
         # If mutated child is solution, break #
-
         if child_str == cf.TARGET:
             solution_found = True
             solution = ''.join(child)
@@ -50,16 +40,7 @@ def main():
                 best_string = child_str
 
         # Select 2 more random population members and choose who to replace according to population #
-
-        index_1 = index_2 = -1
-        while index_1 == index_2:
-            index_1 = random.randint(0, len(cf.TARGET) - 1)
-            index_2 = random.randint(0, len(cf.TARGET) - 1)
-
-        ran_word_1 = population[index_1]
-        ran_word_2 = population[index_2]
-        fitness_1 = seen_strings[''.join(ran_word_1)]
-        fitness_2 = seen_strings[''.join(ran_word_2)]
+        ran_word_1, fitness_1, index_1, ran_word_2, fitness_2, index_2 = cf.random_2_members(population)
 
         if fitness_1 > fitness_2:
             population[index_2] = child

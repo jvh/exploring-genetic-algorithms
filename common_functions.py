@@ -12,6 +12,7 @@ CHAR_POSSIBILITIES = 'abcdefghijklmnopqrstuvwxyz '
 # selection in the case in which they have been seen before
 string_fitness = {}
 
+
 def fitness(word):
     """
     Calculates the fitness of a certain word, measured by how many characters are correctly in the right place relative
@@ -47,6 +48,31 @@ def initialise(population_size=POPULATION_SIZE):
         current_strings.append(new_str)
 
     return string_fitness, current_strings
+
+
+def random_2_members(population):
+    """
+    Chooses 2 random members of the population, given that they are not in the same position
+    :param: ([[char]]) List of population members
+
+    :return: ([char]) Random member 1
+    :return: (float) Random member 1's fitness
+    :return: (int) Random member 1's index in the population
+    :return: ([char]) Random member 2
+    :return: (float) Random member 2's fitness
+    :return: (int) Random member 2's index in the population
+    """
+    index_1 = index_2 = -1
+    while index_1 == index_2:
+        index_1 = random.randint(0, len(population) - 1)
+        index_2 = random.randint(0, len(population) - 1)
+
+    ran_word_1 = population[index_1]
+    ran_word_2 = population[index_2]
+    fitness_1 = string_fitness[''.join(ran_word_1)]
+    fitness_2 = string_fitness[''.join(ran_word_2)]
+
+    return ran_word_1, fitness_1, index_1, ran_word_2, fitness_2, index_2
 
 
 def mutate(string):
