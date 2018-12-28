@@ -1,5 +1,4 @@
 import common_functions as cf
-import random
 
 
 def main():
@@ -10,11 +9,10 @@ def main():
     """
     seen_strings, population = cf.initialise()
     solution_found = False
-    solution = ''
     total_mutations = 0
     generation = 0
 
-    while not solution_found:
+    while True:
         max_fitness = 0
         best_string = ''
 
@@ -31,7 +29,6 @@ def main():
 
         # If mutated child is solution, break #
         if child_str == cf.TARGET:
-            solution_found = True
             solution = ''.join(child)
             break
         else:
