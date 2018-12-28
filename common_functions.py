@@ -2,7 +2,7 @@ import random
 
 
 POPULATION_SIZE = 500
-TARGET = 'hello world'
+TARGET = 'methinks it is like a weasel'
 MUTATION_RATE = 1/len(TARGET)
 # This is the number of mutations which must take place before target is found
 speed = 0
