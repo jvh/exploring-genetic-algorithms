@@ -8,7 +8,7 @@ def main():
 
     Prints metrics of the solution once found.
     """
-    population = cf.initialise()
+    seen_strings, population = cf.initialise()
     solution_found = False
     solution = ''
     total_mutations = 0
@@ -18,6 +18,8 @@ def main():
         max_fitness = 0
         best_string = ''
 
+        # Selecting 2 random members, picking best one to be parent (out of the random choice) #
+
         index_1 = index_2 = -1
         while index_1 == index_2:
             index_1 = random.randint(0, len(cf.TARGET) - 1)
@@ -25,28 +27,30 @@ def main():
 
         ran_word_1 = population[index_1]
         ran_word_2 = population[index_2]
-        fitness_1 = cf.fitness(ran_word_1)
-        fitness_2 = cf.fitness(ran_word_2)
+        fitness_1 = seen_strings[''.join(ran_word_1)]
+        fitness_2 = seen_strings[''.join(ran_word_2)]
 
-        # Picking best parent (out of the random choice)
         if fitness_1 > fitness_2:
             parent = ran_word_1
         else:
             parent = ran_word_2
 
-        # Getting child from parent
         child, mutations = cf.mutate(parent)
+        child_str = ''.join(child)
 
-        if child == list(cf.TARGET):
+        # If mutated child is solution, break #
+
+        if child_str == cf.TARGET:
             solution_found = True
             solution = ''.join(child)
             break
         else:
-            if cf.fitness(child) >= max_fitness:
-                max_fitness = cf.fitness(child)
-                best_string = ''.join(child)
+            if seen_strings[child_str] >= max_fitness:
+                max_fitness = seen_strings[child_str]
+                best_string = child_str
 
-        # Select 2 more random population members and choose who to replace according to population
+        # Select 2 more random population members and choose who to replace according to population #
+
         index_1 = index_2 = -1
         while index_1 == index_2:
             index_1 = random.randint(0, len(cf.TARGET) - 1)
@@ -54,8 +58,8 @@ def main():
 
         ran_word_1 = population[index_1]
         ran_word_2 = population[index_2]
-        fitness_1 = cf.fitness(ran_word_1)
-        fitness_2 = cf.fitness(ran_word_2)
+        fitness_1 = seen_strings[''.join(ran_word_1)]
+        fitness_2 = seen_strings[''.join(ran_word_2)]
 
         if fitness_1 > fitness_2:
             population[index_2] = child
@@ -66,6 +70,7 @@ def main():
 
         if not solution_found:
             generation += 1
+
         print("Best solution found at generation {}: '{}', with fitness {}".format(generation, best_string,
                                                                                    max_fitness))
 
